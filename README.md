@@ -32,15 +32,15 @@ A network called mongo-network was created using the command: docker network cre
 --name mongodb \
 mongo
 
-docker run -d \
--p 8081:8081 \
--e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
--e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
--e ME_CONFIG_MONGODB_SERVER=mongodb \
--e ME_CONFIG_MONGODB_AUTH_DATABASE=admin \
---net mongo-network \
---name mongo-express \
-mongo-express
+  docker run -d \
+  -p 8081:8081 \
+  -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+  -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+  -e ME_CONFIG_MONGODB_SERVER=mongodb \
+  -e ME_CONFIG_MONGODB_AUTH_DATABASE=admin \
+  --net mongo-network \
+  --name mongo-express \
+  mongo-express
 
 - Configuring database and test application
   Inside the UI of Mongo-Express, a database called user-account and a collection called users were manually created. The application was configured to connect to this database using MongoClient, and there were two endpoints: one to update the user profile data and another to retrieve the profile. The application was tested in the browser (localhost:3000) by updating the user profile. After this, it was possible to verify in the Mongo-Express UI that the data had been updated by the application, showing that the connection between the app and the database was successfully established.
