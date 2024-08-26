@@ -49,6 +49,8 @@ mongo
 
   Inside the UI of Mongo-Express, a database called user-account and a collection called users were manually created. The application was configured to connect to this database using MongoClient, and there were two endpoints: one to update the user profile data and another to retrieve the profile. The application was tested in the browser (localhost:3000) by updating the user profile. After this, it was possible to verify in the Mongo-Express UI that the data had been updated by the application, showing that the connection between the app and the database was successfully established.
 
+  ![Diagram](./mongo-ui.png)
+
 # Demo Project 2
 
 Docker Compose - Run multiple Docker containers
@@ -76,3 +78,50 @@ Docker, MongoDB, MongoExpress
   After configuring the Docker Compose file, the command docker compose up was used to create the containers. By running the Node.js app again, the same steps were followed to test the application (creating the database and collection in the Mongo-Express UI). This was necessary because the containers created by the docker run commands were not configured to persist data, so the new containers launched by Docker Compose did not retain any previous data. To stop all the containers and the network, the command docker compose down eas runned.
 
 
+# Demo Project 3
+
+Dockerize Nodejs application and push to private Docker Registry
+
+## Technologies Used
+
+Docker, Node.js, Amazon ECR
+
+## Project Description
+
+- Write Dockerfile to build a Docker image for a Nodejs application
+- Create private Docker registry on AWS (Amazon ECR)
+- Push Docker image to this private repository
+
+### Details of project  
+  
+- Create a repository in ECR
+
+ In this project, an AWS account was used to push Docker images from previous projects to a service called Elastic Container Registry. In this service, a private repository was created, which will contain only the Docker images from the Node app.
+
+- Steps to push the image
+
+  A list of commands has been provided by ECR to facilitate the pushing process:
+
+  1- Authenticate using the docker login command. This step is also important if another service, such as Jenkins, needs to connect to the repository.
+  ```
+  aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 808826729764.dkr.ecr.us-east-1.amazonaws.com
+  ```
+  2- Build the image with a specific name, in this case, the name of the repository.
+  ```
+  docker build -t my-app .
+  ```
+  3- Rename the image to include the repository name before the image name. This is necessary because, by default, the docker push command will push the image to Docker Hub. For this reason, it is essential to specify the container name.
+  ```
+  docker tag my-app:1.0 808826729764.dkr.ecr.us-east-1.amazonaws.com/my-app:1.0
+  ```
+  4- Push the image to ECR repository.
+  ```
+  docker push 808826729764.dkr.ecr.us-east-1.amazonaws.com/my-app:1.0
+  ```
+ Using these commands, the images are successfully pushed to Amazon ECR. It can be a good practice to push the same images with different tags to test various versions of the image.
+  
+
+    
+
+
+  
