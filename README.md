@@ -27,14 +27,16 @@ Docker, Node.js, MongoDB, MongoExpress
 
   A network called mongo-network was created using the command: docker network create mongo-network. It is used to connect all the containers to the same network, allowing communication between them. After this, the MongoDB and Mongo-Express containers were run on their respective ports, with environment variables for login and password, inside the network, using the commands:
   
+  ```
   docker run -d \
--p 27017:27017 \
--e MONGO_INITDB_ROOT_USERNAME=admin \
--e MONGO_INITDB_ROOT_PASSWORD=password \
---net mongo-network \
---name mongodb \
-mongo
-
+  -p 27017:27017 \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=password \
+  --net mongo-network \
+  --name mongodb \
+  mongo
+  ```
+  ```
   docker run -d \
   -p 8081:8081 \
   -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
@@ -44,6 +46,7 @@ mongo
   --net mongo-network \
   --name mongo-express \
   mongo-express
+  ```
 
 - Configuring database and test application
 
