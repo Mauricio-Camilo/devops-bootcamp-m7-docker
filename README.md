@@ -119,7 +119,7 @@ Docker, Node.js, Amazon ECR
   
 - Create a repository in ECR
 
- In this project, an AWS account was used to push Docker images from previous projects to a service called Elastic Container Registry. In this service, a private repository was created, which will contain only the Docker images from the Node app.
+  In this project, an AWS account was used to push Docker images from previous projects to a service called Elastic Container Registry. In this service, a private repository was created, which will contain only the Docker images from the Node app.
 
 - Steps to push the image
 
@@ -240,17 +240,18 @@ Docker, Nexus, DigitalOcean, Linux
   
 - Create Docker hosted repository and role on Nexus
 
-  In this project, a Docker hosted repository was created with a blob store previous created. In order to allow the access of this repository, a  
-  role with the privilege nx-repository-view-docker-docker-hosted-add was created and attached to an user.
+  In this project, a Docker hosted repository was created with a previously created blob store. To allow access to this repository, a role with the privilege nx-repository-view-docker- 
+docker-hosted-add was created and assigned to a user.
 
 - Configure Nexus, server and docker
 
-  The next step of the project is configuring the Nexus repository, allowing a port that can enable access do Docker Client. In the docker-hosted   settings, the HTTP option was enable in the port 8083, and the same port was allowed in the firewall (inbound rule) of the server. By doing 
-  this, the repository can be access by the public IP of the server in this port.
-  Another configuration is the Nexus Realms, that deals with the token used in the authentication. This step was configured enabling the option     Docker Bearer Token Realm.
-  One last thing to consider is the fact Nexus is running in a not secure connection, so the docker client needs to be configuration to accept 
-  docker-hosted as a insecure connection. Since I am using Ubuntu, this configuration was done editing the file /etc/docker/daemon.json, adding 
-  the url of the docker-hosted, and then restarting docker:
+  The next step of the project involves configuring the Nexus repository to allow access via the Docker client. In the docker-hosted settings, the HTTP option was enabled on port 8083, and 
+  this port was also allowed in the server’s firewall (inbound rule). This allows the repository to be accessed via the server's public IP on this port.
+
+  Another configuration involves Nexus Realms, which manages the token used for authentication. This step was completed by enabling the Docker Bearer Token Realm option.
+
+  One final consideration is that Nexus is running on an insecure connection, so the Docker client needs to be configured to accept the docker-hosted repository as an insecure connection. 
+  Since I am using Ubuntu, this was done by editing the /etc/docker/daemon.json file, adding the URL of the docker-hosted repository, and then restarting Docker.
 
   ```
    {
@@ -258,7 +259,12 @@ Docker, Nexus, DigitalOcean, Linux
     }
   ```
   
-  After all these configurations, the docker login is now ready to establish a connection to the docker-hosted in Nexus using docker login. The 
-  first attempt asked for the user and password to validate the login. The token was saved in ./docker/config.json, so the login can be performed   without the user/password.
+  After all these configurations, the Docker client is now ready to establish a connection to the docker-hosted repository in Nexus using docker login. During the first attempt, it prompted 
+  for a username and password to validate the login. The token was then saved in ./docker/config.json, allowing future logins to be performed without needing the username and password.
 
+  ![Diagram](./docker-login.png)
 
+  With docker login successfully connected, the same commands used in the previous steps to push an image were applied here, renaming the image with the URL of the docker-hosted repository. After pushing the image, it can be observed in Nexus.
+   
+
+  
