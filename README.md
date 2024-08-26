@@ -217,5 +217,8 @@ Docker, Node.js, MongoDB
       mongo-data:
         driver: local
     ```
-  A new volume named mongo-data was created in the host, with represents a physical storage in local file system. Besides that, inside the          mongodb service, a new section of volume was added to mapping the mango-data with a internal path of the docker image. In other words, when       docker compose runs the container, it will transfer all the data stored in the host volume mongo-data to the path /data/db. It is possible to     check that the data contained in mongo-data is the same as in /data/db.
+  A new volume named mongo-data was created on the host, which represents physical storage in the local file system. Additionally, within the mongodb service, a new volume section was added to map mongo-data to an internal path of the Docker image. In other words, when Docker Compose runs the container, it will store all data in the host volume mongo-data and map it to the path /data/db. Is is possible to verify that the data in mongo-data is the same as in /data/db.
+
+  ![Diagram](./volumes.png)
+
 
