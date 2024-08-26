@@ -221,4 +221,44 @@ Docker, Node.js, MongoDB
 
   ![Diagram](./volumes.png)
 
+# Demo Project 6
+
+Create Docker repository on Nexus and push to it
+
+## Technologies Used
+
+Docker, Nexus, DigitalOcean, Linux
+
+## Project Description
+
+- Create Docker hosted repository on Nexus
+- Create Docker repository role on Nexus
+- Configure Nexus, DigitalOcean Droplet and Docker to be able to push to Docker repository
+- Build and Push Docker image to Docker repository on Nexus
+
+### Details of project  
+  
+- Create Docker hosted repository and role on Nexus
+
+  In this project, a Docker hosted repository was created with a blob store previous created. In order to allow the access of this repository, a  
+  role with the privilege nx-repository-view-docker-docker-hosted-add was created and attached to an user.
+
+- Configure Nexus, server and docker
+
+  The next step of the project is configuring the Nexus repository, allowing a port that can enable access do Docker Client. In the docker-hosted   settings, the HTTP option was enable in the port 8083, and the same port was allowed in the firewall (inbound rule) of the server. By doing 
+  this, the repository can be access by the public IP of the server in this port.
+  Another configuration is the Nexus Realms, that deals with the token used in the authentication. This step was configured enabling the option     Docker Bearer Token Realm.
+  One last thing to consider is the fact Nexus is running in a not secure connection, so the docker client needs to be configuration to accept 
+  docker-hosted as a insecure connection. Since I am using Ubuntu, this configuration was done editing the file /etc/docker/daemon.json, adding 
+  the url of the docker-hosted, and then restarting docker:
+
+  ```
+   {
+	"insecure-registries" : ["http://98.81.158.92:8083"]
+    }
+  ```
+  
+  After all these configurations, the docker login is now ready to establish a connection to the docker-hosted in Nexus using docker login. The 
+  first attempt asked for the user and password to validate the login. The token was saved in ./docker/config.json, so the login can be performed   without the user/password.
+
 
