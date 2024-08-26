@@ -265,6 +265,9 @@ docker-hosted-add was created and assigned to a user.
   ![Diagram](./docker-login.png)
 
   With docker login successfully connected, the same commands used in the previous steps to push an image were applied here, renaming the image with the URL of the docker-hosted repository. After pushing the image, it can be observed in Nexus.
+
+  ![Diagram](./nexus.png)
+
    
 
   
