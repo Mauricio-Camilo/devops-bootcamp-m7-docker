@@ -70,11 +70,31 @@ Docker, MongoDB, MongoExpress
   
 - Configuring Docker Compose file
 
-  In this project, a Docker Compose file in YAML format was created to simplify the process of running the containers. All the information that was used to write the docker run commands is 
-  now consolidated into a single file. Both the MongoDB and Mongo-Express containers have their own sections in the file. One advantage of using Docker Compose is that there is no need to 
-  manually create the network; when Docker Compose starts, a network is automatically created, connecting the containers. Additionally, the Docker Compose file was configured to ensure that 
-  Mongo-Express will only start after the MongoDB container is ready to accept connections.
+  In this project, a Docker Compose file in YAML format was created to simplify the process of running the containers. All the information that was used to write the docker run commands is now consolidated into a single file. Both the MongoDB and Mongo-Express containers have their own sections in the file. One advantage of using Docker Compose is that there is no need to manually create the network; when Docker Compose starts, a network is automatically created, connecting the containers. Additionally, the Docker Compose file was configured to ensure that Mongo-Express will only start after the MongoDB container is ready to accept connections.
 
+    ```
+    version: '3'
+    services:
+      mongodb:
+        image: mongo
+        ports:
+         - 27017:27017
+        environment:
+         - MONGO_INITDB_ROOT_USERNAME=admin
+         - MONGO_INITDB_ROOT_PASSWORD=password
+      mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+         - 8081:8081
+        environment:
+         - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+         - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+         - ME_CONFIG_MONGODB_SERVER=mongodb
+        depends_on:
+         - "mongodb"
+    ```
+    
 - Run the images
 
   After configuring the Docker Compose file, the command docker compose up was used to create the containers. By running the Node.js app again, the same steps were followed to test the application (creating the database and collection in the Mongo-Express UI). This was necessary because the containers created by the docker run commands were not configured to persist data, so the new containers launched by Docker Compose did not retain any previous data. To stop all the containers and the network, the command docker compose down eas runned.
