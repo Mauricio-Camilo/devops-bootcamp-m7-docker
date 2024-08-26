@@ -70,16 +70,16 @@ Docker, MongoDB, MongoExpress
   
 - Configuring Docker Compose file
 
-  In this project, a Docker Compose file in YAML format was created to simplify the process of running the containers. All the information that 
-  was used to write the docker run commands is now consolidated into a single file. Both the MongoDB and Mongo-Express containers have their own 
-  sections in the file. One advantage of using Docker Compose is that there is no need to manually create the network; when Docker Compose starts, 
-  a network is automatically created, connecting the containers. Additionally, the Docker Compose file was configured to ensure that Mongo-Express 
-  will only start after the MongoDB container is ready to accept connections.
+  In this project, a Docker Compose file in YAML format was created to simplify the process of running the containers. All the information that was used to write the docker run commands is 
+  now consolidated into a single file. Both the MongoDB and Mongo-Express containers have their own sections in the file. One advantage of using Docker Compose is that there is no need to 
+  manually create the network; when Docker Compose starts, a network is automatically created, connecting the containers. Additionally, the Docker Compose file was configured to ensure that 
+  Mongo-Express will only start after the MongoDB container is ready to accept connections.
 
 - Run the images
 
   After configuring the Docker Compose file, the command docker compose up was used to create the containers. By running the Node.js app again, the same steps were followed to test the application (creating the database and collection in the Mongo-Express UI). This was necessary because the containers created by the docker run commands were not configured to persist data, so the new containers launched by Docker Compose did not retain any previous data. To stop all the containers and the network, the command docker compose down eas runned.
 
+  ![Diagram](./docker-compose.png)
 
 # Demo Project 3
 
@@ -121,8 +121,10 @@ Docker, Node.js, Amazon ECR
   ```
   docker push 808826729764.dkr.ecr.us-east-1.amazonaws.com/my-app:1.0
   ```
- Using these commands, the images are successfully pushed to Amazon ECR. It can be a good practice to push the same images with different tags to test various versions of the image.
-  
+  Using these commands, the images are successfully pushed to Amazon ECR. It can be a good practice to push the same images with different tags to test various versions of the image.
+
+  ![Diagram](./ecr.png)
+
 
     
 
