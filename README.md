@@ -124,7 +124,50 @@ Docker, Node.js, Amazon ECR
   Using these commands, the images are successfully pushed to Amazon ECR. It can be a good practice to push the same images with different tags to test various versions of the image.
 
   ![Diagram](./ecr.png)
+  
 
+# Demo Project 4
+
+Deploy Docker application on a server with Docker Compose
+
+## Technologies Used
+
+Docker, Amazon ECR, Node.js, MongoDB, MongoExpress
+
+## Project Description
+
+- Copy Docker-compose file to remote server
+- Login to private Docker registry on remote server to fetch our app image
+- Start our application container with MongoDB and MongoExpress services using docker compose
+
+### Details of project  
+  
+- Update Docker-compose file and node application
+
+  In this project, an update was made in docker-compose to add the node-app docker image pushed in ECR. 
+
+    ```
+    services:
+      my-app:
+        image: 808826729764.dkr.ecr.us-east-1.amazonaws.com/my-app:1.0
+        ports:
+         - 3000:3000
+    ```
+  Now the my-app container will run on the same network as mongo-db and mongo-express. However, it is necessary to update the connection that the   Node app makes to MongoDB.
+
+  ```
+  // use when starting application locally with node command
+  let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
+
+  // use when starting application as docker container, part of docker-compose
+  let mongoUrlDockerCompose = "mongodb://admin:password@mongodb";
+  ```
+  By analyzing the code above, the connection was initially made to localhost, but with the changes in Docker Compose, the Node app can now connect using the name of the mongodb container. Additionally, the MongoClient connection in the application was updated to use the mongoUrlDockerCompose variable. The new version of the application was pushed to ECR again with the name my-app:1.0 to be recognized by Docker Compose.
+
+- Run docker compose in remote server
+
+  Considering that the new Docker image was successfully pushed, the Docker Compose file was created on the remote server. After that, you need     to log in to the private Docker registry on the remote server to fetch our app image. By following these steps and using the docker compose up    command, all the containers will be running on the new server. You can then repeat the steps from the previous projects to test the application.
+  
 
     
 
