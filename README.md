@@ -187,9 +187,35 @@ Docker, Amazon ECR, Node.js, MongoDB, MongoExpress
 - Run docker compose in remote server
 
   Considering that the new Docker image was successfully pushed, the Docker Compose file was created on the remote server. After that, you need     to log in to the private Docker registry on the remote server to fetch our app image. By following these steps and using the docker compose up    command, all the containers will be running on the new server. You can then repeat the steps from the previous projects to test the application.
-  
 
+# Demo Project 5
+
+Persist data with Docker Volumes
+
+## Technologies Used
+
+Docker, Node.js, MongoDB
+
+## Project Description
+
+- Persist data of a MongoDB container by attaching a Docker volume to it 
+
+### Details of project  
+  
+- Update Docker-compose file with volume configuration
+
+  In this project, an update was made in docker-compose to add the volume o persist data.
+
+    ```
+      mongodb:
+        image: mongo
+        ...
+        volumes:
+         - mongo-data:/data/db
     
+    volumes:
+      mongo-data:
+        driver: local
+    ```
+  A new volume named mongo-data was created in the host, with represents a physical storage in local file system. Besides that, inside the          mongodb service, a new section of volume was added to mapping the mango-data with a internal path of the docker image. In other words, when       docker compose runs the container, it will transfer all the data stored in the host volume mongo-data to the path /data/db. It is possible to     check that the data contained in mongo-data is the same as in /data/db.
 
-
-  
