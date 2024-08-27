@@ -268,6 +268,45 @@ docker-hosted-add was created and assigned to a user.
 
   ![Diagram](./nexus.png)
 
+# Demo Project 7
+
+Deploy Nexus as Docker container
+
+## Technologies Used
+
+Docker, Nexus, DigitalOcean, Linux
+
+## Project Description
+
+- Create and Configure Droplet
+- Set up and run Nexus as a Docker container
+
+### Details of project  
+  
+- Create new Droplet and install docker
+
+  A new droplet was created to serve as a server for running Nexus inside a Docker container. This involved configuring firewall rules, connecting via terminal, and installing Docker.
+  
+- Pull Nexus image and configuration
+
+  1- The first step was to create a volume to persist data used in Nexus.
+  
+    ```
+    docker volume create --name nexus-data
+    ```
+  2- Run Nexus container in port 8081, using the created volume, and pulling the image sonatype/nexus3 from Docker Hub.
+  
+    ```
+    docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+    ```
+ - Check docker container and volume
+
+   Is is possible to verify the Nexus container is running by checking with docker ps. It is already set up with a user called nexus.
+
+   The mount point created on the server is located at /var/snap/docker/common/var-lib-docker/volumes/nexus-data/_data.
+
+   Inside the container, the volume is mounted in the home directory.
+
    
 
   
