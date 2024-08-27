@@ -52,7 +52,7 @@ Docker, Node.js, MongoDB, MongoExpress
 
   Inside the UI of Mongo-Express, a database called user-account and a collection called users were manually created. The application was configured to connect to this database using MongoClient, and there were two endpoints: one to update the user profile data and another to retrieve the profile. The application was tested in the browser (localhost:3000) by updating the user profile. After this, it was possible to verify in the Mongo-Express UI that the data had been updated by the application, showing that the connection between the app and the database was successfully established.
 
-  ![Diagram](./mongo-ui.png)
+  ![Diagram](./images/mongo-ui.png)
 
 # Demo Project 2
 
@@ -99,7 +99,7 @@ Docker, MongoDB, MongoExpress
 
   After configuring the Docker Compose file, the command docker compose up was used to create the containers. By running the Node.js app again, the same steps were followed to test the application (creating the database and collection in the Mongo-Express UI). This was necessary because the containers created by the docker run commands were not configured to persist data, so the new containers launched by Docker Compose did not retain any previous data. To stop all the containers and the network, the command docker compose down eas runned.
 
-  ![Diagram](./docker-compose.png)
+  ![Diagram](./images/docker-compose.png)
 
 # Demo Project 3
 
@@ -143,7 +143,7 @@ Docker, Node.js, Amazon ECR
   ```
   Using these commands, the images are successfully pushed to Amazon ECR. It can be a good practice to push the same images with different tags to test various versions of the image.
 
-  ![Diagram](./ecr.png)
+  ![Diagram](./images/ecr.png)
   
 
 # Demo Project 4
@@ -219,7 +219,7 @@ Docker, Node.js, MongoDB
     ```
   A new volume named mongo-data was created on the host, which represents physical storage in the local file system. Additionally, within the mongodb service, a new volume section was added to map mongo-data to an internal path of the Docker image. In other words, when Docker Compose runs the container, it will store all data in the host volume mongo-data and map it to the path /data/db. Is is possible to verify that the data in mongo-data is the same as in /data/db.
 
-  ![Diagram](./volumes.png)
+  ![Diagram](./images/volumes.png)
 
 # Demo Project 6
 
@@ -262,11 +262,11 @@ docker-hosted-add was created and assigned to a user.
   After all these configurations, the Docker client is now ready to establish a connection to the docker-hosted repository in Nexus using docker login. During the first attempt, it prompted 
   for a username and password to validate the login. The token was then saved in ./docker/config.json, allowing future logins to be performed without needing the username and password.
 
-  ![Diagram](./docker-login.png)
+  ![Diagram](./images/docker-login.png)
 
   With docker login successfully connected, the same commands used in the previous steps to push an image were applied here, renaming the image with the URL of the docker-hosted repository. After pushing the image, it can be observed in Nexus.
 
-  ![Diagram](./nexus.png)
+  ![Diagram](./images/nexus.png)
 
 # Demo Project 7
 
@@ -303,7 +303,11 @@ Docker, Nexus, DigitalOcean, Linux
 
    Is is possible to verify the Nexus container is running by checking with docker ps. It is already set up with a user called nexus.
 
+   ![Diagram](./images/nexus-container.png)
+
    The mount point created on the server is located at /var/snap/docker/common/var-lib-docker/volumes/nexus-data/_data.
+
+   ![Diagram](./images/nexus-volume.png)
 
    Inside the container, the volume is mounted in the home directory.
 
